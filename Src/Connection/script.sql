@@ -51,7 +51,7 @@ CREATE TABLE SuperIntendecia(
     pais VARCHAR(50)
 );
 
-CREATE TABLE Reservacion(
+CREATE TABLE Reservaciones(
 
     idReservacion INT IDENTITY(1,1) PRIMARY KEY,
     idUsuario INT  FOREIGN KEY REFERENCES Usuarios(idUsario),
@@ -84,7 +84,7 @@ CREATE TABLE Paradas(
 );
 
 CREATE TABLE Inconvenientes(
-    iInconveniente INT IDENTITY(1,1) PRIMARY KEY,
+    idInconveniente INT IDENTITY(1,1) PRIMARY KEY,
     idChofer INT FOREIGN KEY REFERENCES Chofer(idChofer),
     idRuta INT FOREIGN KEY REFERENCES Rutas(idRuta),
     titulo VARCHAR(50),

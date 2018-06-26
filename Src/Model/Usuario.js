@@ -27,7 +27,7 @@ UsuariosModel.getUsuario =(idUsuario, callback)=>{
 
     if(conexion)
     {
-        conexion.query('select *from Usuarios where idUsario= ?', idUsario,(err,result)=>{
+        conexion.query('select *from Usuarios where idUsuario= ?', idUsuario,(err,result)=>{
 
             if(err)
             {
@@ -76,7 +76,7 @@ UsuariosModel.updateUsuario = (usuario,callback)=>{
             email =${conexion.escape(usuario.email)},
             clave =${conexion.escape(usuario.clave)},
             img =${conexion.escape(usuario.img)},
-            where idUsuario =${usuario.idUsario}`;
+            where idUsuario =${usuario.idUsuario}`;
 
         conexion.query(sql,(err,result)=>{
 
@@ -95,13 +95,13 @@ UsuariosModel.updateUsuario = (usuario,callback)=>{
 UsuariosModel.deleteUsuario = (usuario,callback)=>{
     if(conexion)
     {
-        let sql =`select * from Usuarios where idUsuario =${conexion.escape(usario.idUsario)}`;
+        let sql =`select * from Usuarios where idUsuario =${conexion.escape(usario.idUsuario)}`;
 
         conexion.query(sql,(err,result)=>{
 
         if(result)
         {
-            let sql =` delete * from Usuarios where idUsuario =${conexion.escape(usario.idUsario)}`;
+            let sql =` delete * from Usuarios where idUsuario =${conexion.escape(usario.idUsuario)}`;
 
             conexion,query(sql,(err,result)=>{
 
@@ -120,9 +120,7 @@ UsuariosModel.deleteUsuario = (usuario,callback)=>{
             callback(null,{msg:"No Existe"});
         }
 
-            
-
-        })
+        });
     }
 
 }
