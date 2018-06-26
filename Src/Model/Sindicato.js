@@ -7,7 +7,7 @@ SindicatoModel.getSindicato = (callback)=>{
     if(conexion)
     {
 
-        conexion.query('select * from Sindicato',(err,result)=>{
+        conexion.query('select * from Sindicatos',(err,result)=>{
 
                if(err)
                {
@@ -27,7 +27,7 @@ SindicatoModel.getSindicato =(idSindicato, callback)=>{
 
     if(conexion)
     {
-        conexion.query('select *from Sindicato where idSindicato= ?', idSindicato,(err,result)=>{
+        conexion.query('select *from Sindicatos where idSindicato= ?', idSindicato,(err,result)=>{
 
             if(err)
             {
@@ -49,7 +49,7 @@ SindicatoModel.insertSindicato=(sindicato, callback)=>{
     if(conexion)
     {
 
-        conexion.query('insert into Sindicato ?',sindicato,(err,result)=>{
+        conexion.query('insert into Sindicatos ?',sindicato,(err,result)=>{
 
             if(err)
             {
@@ -70,7 +70,7 @@ SindicatoModel.updateSindicato = (sindicato,callback)=>{
     {
 
         const sql = `
-            update Sindicato set
+            update Sindicatos set
             nombre =${conexion.escape(indicato.nombres)},
             siglas=${conexion.escape(sindicato.siglas)},
             email =${conexion.escape(sindicato.email)},
@@ -95,7 +95,7 @@ SindicatoModel.updateSindicato = (sindicato,callback)=>{
 SindicatoModel.deleteSindicato = (sindicato,callback)=>{
     if(conexion)
     {
-        let sql =`select * from Sindicato where idSindicato =${conexion.escape(sindicato.idSindicato)}`;
+        let sql =`select * from Sindicatos where idSindicato =${conexion.escape(sindicato.idSindicato)}`;
 
         conexion.query(sql,(err,result)=>{
 
