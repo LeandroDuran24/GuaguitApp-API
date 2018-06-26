@@ -50,3 +50,77 @@ CREATE TABLE SuperIntendecia(
     idIntendencia INT IDENTITY(1,1) PRIMARY KEY,
     pais VARCHAR(50)
 );
+
+CREATE TABLE Reservacion(
+
+    idReservacion INT IDENTITY(1,1) PRIMARY KEY,
+    idUsuario INT  FOREIGN KEY REFERENCES Usuarios(idUsario),
+    idTurno INT FOREIGN KEY REFERENCES Turnos(idTurno),
+    estado VARCHAR(50)
+    
+
+);
+
+CREATE TABLE Turnos(
+
+    idTurno INT IDENTITY(1,1) PRIMARY KEY,
+    idRuta INT FOREIGN KEY REFERENCES Rutas(idRuta),
+    idParada INT FOREIGN KEY REFERENCES Paradas(idParada),
+    idChofer INT FOREIGN KEY REFERENCES Chofer(idChofer),
+    fechaHoraSalida DATETIME,
+    fechaHoraLlegada DATETIME
+
+);
+
+CREATE TABLE Paradas(
+
+    idParada INT IDENTITY(1,1) PRIMARY KEY,
+    idRuta INT FOREIGN KEY REFERENCES Rutas(idRuta),
+    idManager INT FOREIGN KEY REFERENCES Chofer(idChofer),
+    nombre VARCHAR(30),
+    latitud VARCHAR(50),
+    longitud VARCHAR(50)
+
+);
+
+CREATE TABLE Inconvenientes(
+    iInconveniente INT IDENTITY(1,1) PRIMARY KEY,
+    idChofer INT FOREIGN KEY REFERENCES Chofer(idChofer),
+    idRuta INT FOREIGN KEY REFERENCES Rutas(idRuta),
+    titulo VARCHAR(50),
+    descripcion VARCHAR(200),
+    rescate VARCHAR(10),
+    latitud VARCHAR(50),
+    longitud VARCHAR(50)
+
+
+);
+
+CREATE TABLE Rutas(
+
+    idRuta INT IDENTITY(1,1) PRIMARY KEY,
+    idSindicato INT FOREIGN KEY REFERENCES Sindicatos(idSindicato),
+    idPresidente INT FOREIGN KEY REFERENCES Chofer(idChofer),
+    nombre VARCHAR(75),
+    descripcion VARCHAR(100),
+    paradaA VARCHAR(50),
+    paradaB VARCHAR(50),
+    pasaje INT,
+    foto TEXT,
+    horaInicialLabores TIME,
+    horaFinLabores TIME,
+    aceptaReservaciones VARCHAR(10)
+
+
+
+);
+
+CREATE TABLE Cobros(
+    idCobro INT IDENTITY(1,1) PRIMARY KEY,
+    idRuta INT FOREIGN KEY REFERENCES Rutas(idRuta),
+    idManager INT FOREIGN KEY REFERENCES Chofer(idChofer),
+    idChofer INT FOREIGN KEY REFERENCES Chofer(idChofer),
+    monto INT,
+    estado varchar(10),
+    fecha DATETIME
+);
