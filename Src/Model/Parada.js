@@ -1,4 +1,6 @@
-const conexion= require('./../Connection/conexion');
+var DbConnection= require('./../Connection/conexion');
+const conexion = DbConnection();
+
 
 let ParadaModel = {}
 
@@ -11,7 +13,7 @@ ParadaModel.getParadas = (callback)=>{
 
                if(err)
                {
-                   callback(err,null);
+                   throw err;
                } 
                else
                {
@@ -31,7 +33,7 @@ ParadaModel.getParada =(idParada, callback)=>{
 
             if(err)
             {
-                callback(err,null);
+                throw err;
             }
             else
             {
@@ -49,15 +51,15 @@ ParadaModel.insertParada =(parada, callback)=>{
     if(conexion)
     {
 
-        conexion.query('insert into Paradas ?',parada,(err,result)=>{
+        conexion.query('insert into Paradas SET ?',parada,(err,result)=>{
 
             if(err)
             {
-                callback(err,{'InsertId': 0});
+                throw err;
             }
             else
             {
-                callback(null,{'InsertId':result.InsertId});
+                callback(null,{'insertId':result.insertId});
             }
         })
     }
@@ -69,14 +71,14 @@ ParadaModel.updateParada = (parada,callback)=>{
     if(conexion)
     {
 
-        const sql = `
-            update Paradas set
-            idRuta =${conexion.escape(parada.idRuta)},
+        let sql = 
+            `UPDATE Paradas SET
+            idRuta=${conexion.escape(parada.idRuta)},
             idManager=${conexion.escape(parada.idManager)},
-            nombre =${conexion.escape(usuario.nombre)},
-            latitud =${conexion.escape(usuario.latitud)},
-            longitud =${conexion.escape(usuario.longitud)},
-            where idParada =${parada.idParada}`;
+            nombre=${conexion.escape(parada.nombre)},
+            latitud=${conexion.escape(parada.latitud)},
+            longitud=${conexion.escape(parada.longitud)}
+            where idParada = ${conexion.escape(parada.idParada)}`;
 
         conexion.query(sql,(err,result)=>{
 
@@ -95,15 +97,15 @@ ParadaModel.updateParada = (parada,callback)=>{
 ParadaModel.deleteParada = (parada,callback)=>{
     if(conexion)
     {
-        let sql =`select * from Paradas where idParada =${conexion.escape(parada.idParada)}`;
+        let sql =`select * from Paradas where idParada =${conexion.escape(parada)}`;
 
         conexion.query(sql,(err,result)=>{
 
         if(result)
         {
-            let sql =` delete * from Paradas where idParada =${conexion.escape(parada.idParada)}`;
+            let sql =` delete  from Paradas where idParada =${conexion.escape(parada)}`;
 
-            conexion,query(sql,(err,result)=>{
+            conexion.query(sql,(err,result)=>{
 
                 if(err)
                 {
@@ -124,3 +126,5 @@ ParadaModel.deleteParada = (parada,callback)=>{
     }
 
 }
+
+module.exports=ParadaModel;

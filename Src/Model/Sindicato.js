@@ -1,4 +1,7 @@
-const conexion= require('./../Connection/conexion');
+var DbConnection= require('./../Connection/conexion');
+const conexion = DbConnection();
+
+
 
 let SindicatoModel = {}
 
@@ -124,3 +127,5 @@ SindicatoModel.deleteSindicato = (sindicato,callback)=>{
     }
 
 }
+
+module.exports=SindicatoModel;

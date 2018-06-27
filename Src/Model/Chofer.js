@@ -1,8 +1,10 @@
-const conexion= require('./../Connection/conexion');
+var DbConnection= require('./../Connection/conexion');
+const conexion = DbConnection();
+
 
 let ChoferModel = {}
 
-ChoferModel.getChofer = (callback)=>{
+ChoferModel.getChoferes = (callback)=>{
 
     if(conexion)
     {
@@ -19,15 +21,13 @@ ChoferModel.getChofer = (callback)=>{
                }
         });
     }
-
-
 }
 
 ChoferModel.getChofer =(idChofer, callback)=>{
 
     if(conexion)
     {
-        conexion.query('select *from Choder where idChofer= ?', idChofer,(err,result)=>{
+        conexion.query('select * from Chofer where idChofer=?', idChofer,(err,result)=>{
 
             if(err)
             {
@@ -44,45 +44,45 @@ ChoferModel.getChofer =(idChofer, callback)=>{
 }
 
 
-choferModel.insertChofer =(chofer, callback)=>{
+ChoferModel.insertChofer = (chofer, callback)=>{
 
     if(conexion)
     {
 
-        conexion.query('insert into Chofer ?',chofer,(err,result)=>{
+        conexion.query('insert into Chofer set?',chofer,(err,result)=>{
 
             if(err)
             {
-                callback(err,{'InsertId': 0});
+                throw err;
             }
             else
             {
-                callback(null,{'InsertId':result.InsertId});
+                callback(null,{'insertId':result.insertId});
             }
         })
     }
 }
 
 
-choferModel.updateChoder = (chofer,callback)=>{
+ChoferModel.updateChofer = (chofer,callback)=>{
 
     if(conexion)
     {
 
-        const sql = `
-            update Chofer set
-            nombres =${conexion.escape(chofer.nombres)},
+        let sql = 
+            `UPDATE Chofer SET
+            nombres=${conexion.escape(chofer.nombres)},
             apellidos=${conexion.escape(chofer.apellidos)},
-            email =${conexion.escape(chofer.email)},
-            telefono =${conexion.escape(chofer.telefono)},
             celular=${conexion.escape(chofer.celular)},
-            img =${conexion.escape(chofer.img)},
-            where idChoder =${chofer.idChoder}`;
+            telefono=${conexion.escape(chofer.telefono)},
+            img=${conexion.escape(chofer.img)}
+            where idChofer=${conexion.escape(chofer.idChofer)}`;
 
         conexion.query(sql,(err,result)=>{
 
             if(err)
             {
+                
                 throw err;
             }
             else
@@ -91,20 +91,21 @@ choferModel.updateChoder = (chofer,callback)=>{
             }
         });
     }
+   
 }
 
-choferModel.deleteChofer = (chofer,callback)=>{
+ChoferModel.deleteChofer = (chofer,callback)=>{
     if(conexion)
     {
-        let sql =`select * from Chofer where idChofer =${conexion.escape(chofer.idChoder)}`;
+        let sql =`select * from Chofer where idChofer =${conexion.escape(chofer)}`;
 
         conexion.query(sql,(err,result)=>{
 
         if(result)
         {
-            let sql =` delete * from Chofer where idChofer =${conexion.escape(chofer.idChofer)}`;
+            let sql =` delete from Chofer where idChofer =${conexion.escape(chofer)}`;
 
-            conexion,query(sql,(err,result)=>{
+            conexion.query(sql,(err,result)=>{
 
                 if(err)
                 {
@@ -125,3 +126,5 @@ choferModel.deleteChofer = (chofer,callback)=>{
     }
 
 }
+
+module.exports=ChoferModel;

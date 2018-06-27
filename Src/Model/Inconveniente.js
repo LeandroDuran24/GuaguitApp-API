@@ -1,4 +1,5 @@
-const conexion= require('./../Connection/conexion');
+var DbConnection= require('./../Connection/conexion');
+const conexion = DbConnection();
 
 let InconvenientesModel = {}
 
@@ -12,6 +13,8 @@ InconvenientesModel.getInconvenientes = (callback)=>{
                if(err)
                {
                    callback(err,null);
+                
+                
                } 
                else
                {
@@ -23,11 +26,11 @@ InconvenientesModel.getInconvenientes = (callback)=>{
 
 }
 
-InconvenientesModel.getInconveniente =(idInconvenientes, callback)=>{
+InconvenientesModel.getInconveniente =(idInconveniente, callback)=>{
 
     if(conexion)
     {
-        conexion.query('select *from Inconvenientes where idInconveniente= ?', idInconveniente,(err,result)=>{
+        conexion.query('select * from Inconvenientes where idInconveniente= ?', idInconveniente,(err,result)=>{
 
             if(err)
             {
@@ -49,15 +52,15 @@ InconvenientesModel.insertInconveniente =(inconveniente, callback)=>{
     if(conexion)
     {
 
-        conexion.query('insert into Inconvenientes ?',inconveniente,(err,result)=>{
+        conexion.query('insert into Inconvenientes set ?',inconveniente,(err,result)=>{
 
             if(err)
             {
-                callback(err,{'InsertId': 0});
+               throw err;
             }
             else
             {
-                callback(null,{'InsertId':result.InsertId});
+                callback(null,{'insertId':result.insertId});
             }
         })
     }
@@ -69,16 +72,16 @@ InconvenientesModel.updateInconvenientes = (inconveniente,callback)=>{
     if(conexion)
     {
 
-        const sql = `
-            update Inconvenientes set
-            idChofer =${conexion.escape(inconveniente.idChofer)},
+        let sql = 
+            `UPDATE Inconvenientes SET
+            idChofer=${conexion.escape(inconveniente.idChofer)},
             idRuta=${conexion.escape(inconveniente.idRuta)},
             titulo =${conexion.escape(inconveniente.titulo)},
             descripcion =${conexion.escape(inconveniente.descripcion)},
             rescate =${conexion.escape(inconveniente.rescate)},
             longitud =${conexion.escape(inconveniente.longitud)},
-            latitud =${conexion.escape(inconveniente.latitud)},
-            where idInconveniente =${inconveniente.idInconveniente}`;
+            latitud =${conexion.escape(inconveniente.latitud)}
+            where idInconveniente =${conexion.escape(inconveniente.idInconveniente)}`;
 
         conexion.query(sql,(err,result)=>{
 
@@ -97,15 +100,15 @@ InconvenientesModel.updateInconvenientes = (inconveniente,callback)=>{
 InconvenientesModel.deleteInconveniente = (inconveniente,callback)=>{
     if(conexion)
     {
-        let sql =`select * from Inconvenientes where idInconveniente =${conexion.escape(inconveniente.idInconveniente)}`;
+        let sql =`select * from Inconvenientes where idInconveniente =${conexion.escape(inconveniente)}`;
 
         conexion.query(sql,(err,result)=>{
 
         if(result)
         {
-            let sql =` delete * from Inconvenientes where idInconveniente =${conexion.escape(inconveniente.idInconveniente)}`;
+            let sql =`delete from Inconvenientes where idInconveniente =${conexion.escape(inconveniente)}`;
 
-            conexion,query(sql,(err,result)=>{
+            conexion.query(sql,(err,result)=>{
 
                 if(err)
                 {
@@ -126,3 +129,5 @@ InconvenientesModel.deleteInconveniente = (inconveniente,callback)=>{
     }
 
 }
+
+module.exports=InconvenientesModel;

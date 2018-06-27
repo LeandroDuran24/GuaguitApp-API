@@ -1,4 +1,6 @@
-const conexion= require('./../Connection/conexion');
+var DbConnection= require('./../Connection/conexion');
+const conexion = DbConnection();
+
 
 let RutaModel = {}
 
@@ -131,3 +133,6 @@ RutaModel.deleteRuta= (ruta,callback)=>{
     }
 
 }
+
+
+module.exports=RutaModel;

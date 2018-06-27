@@ -1,0 +1,35 @@
+GET http://localhost:3000/inconvenientes  http/1.1
+###
+GET http://localhost:3000/inconvenientes/7 http/1.1
+###
+POST http://localhost:3000/inconvenientes http/1.1
+content-type: application/json
+
+{
+    "idChofer": 5,
+    "idRuta": 2,
+    "titulo":"goma pichada",
+    "descripcion":"danado",
+    "rescate":"juan",
+    "longitud": "1000",
+    "latitud":"8500"
+}
+
+###
+
+PUT http://localhost:3000/cobro/7 http/1.1
+content-type: application/json
+
+{  
+    "idRuta": 2,
+    "idManager": 1,
+    "idChofer": 5,
+    "monto":"100",
+    "estado":"pagado",
+    "fecha":null
+}
+
+
+###
+
+DELETE http://localhost:3000/cobro/2 http/1.1

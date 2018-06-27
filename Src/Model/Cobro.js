@@ -1,4 +1,6 @@
-const conexion= require('./../Connection/conexion');
+var DbConnection= require('./../Connection/conexion');
+const conexion = DbConnection();
+
 
 let CobroModel = {}
 
@@ -27,7 +29,7 @@ CobroModel.getCobro =(idCobro, callback)=>{
 
     if(conexion)
     {
-        conexion.query('select *from Cobros where idCobro= ?', idCobro,(err,result)=>{
+        conexion.query('select * from Cobros where idCobro= ?', idCobro,(err,result)=>{
 
             if(err)
             {
@@ -49,15 +51,15 @@ CobroModel.insertCobro =(cobro, callback)=>{
     if(conexion)
     {
 
-        conexion.query('insert into Cobros ?',cobro,(err,result)=>{
+        conexion.query('insert into Cobros set?',cobro,(err,result)=>{
 
             if(err)
             {
-                callback(err,{'InsertId': 0});
+                throw err;
             }
             else
             {
-                callback(null,{'InsertId':result.InsertId});
+                callback(null,{'insertId':result.insertId});
             }
         })
     }
@@ -69,15 +71,15 @@ CobroModel.updateCobro = (cobro,callback)=>{
     if(conexion)
     {
 
-        const sql = `
-            update Cobros set
-            idRuta =${conexion.escape(cobro.idRuta)},
+        let sql = 
+            `UPDATE Cobros SET
+            idRuta=${conexion.escape(cobro.idRuta)},
             idManager=${conexion.escape(cobro.idManager)},
-            idChofer =${conexion.escape(cobro.idChofer)},
-            monto =${conexion.escape(cobro.monto)},
-            estado =${conexion.escape(cobro.estado)},
-            fecha =${conexion.escape(cobro.fecha)},
-            where idCobro =${cobro.idCobro}`;
+            idChofer=${conexion.escape(cobro.idChofer)},
+            monto=${conexion.escape(cobro.monto)},
+            estado=${conexion.escape(cobro.estado)},
+            fecha=${conexion.escape(cobro.fecha)}
+            where idCobro=${conexion.escape(cobro.idCobro)}`;
 
         conexion.query(sql,(err,result)=>{
 
@@ -96,15 +98,15 @@ CobroModel.updateCobro = (cobro,callback)=>{
 CobroModel.deleteCobro = (cobro,callback)=>{
     if(conexion)
     {
-        let sql =`select * from Cobros where idCobro =${conexion.escape(cobro.idCobro)}`;
+        let sql =`select * from Cobros where idCobro =${conexion.escape(cobro)}`;
 
         conexion.query(sql,(err,result)=>{
 
         if(result)
         {
-            let sql =` delete * from Corbros where idCobro =${conexion.escape(cobro.idCobro)}`;
+            let sql =`delete from Cobros where idCobro =${conexion.escape(cobro)}`;
 
-            conexion,query(sql,(err,result)=>{
+            conexion.query(sql,(err,result)=>{
 
                 if(err)
                 {
@@ -125,3 +127,5 @@ CobroModel.deleteCobro = (cobro,callback)=>{
     }
 
 }
+
+module.exports=CobroModel;

@@ -6,9 +6,10 @@ module.exports=()=>{
 
         host:'localhost',
         user:'root',
-        password:'',
+        password:'24021998',
         database:'GuaguitApp'
 
     });
 
+    
 }

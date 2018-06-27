@@ -1,4 +1,7 @@
-const conexion= require('./../Connection/conexion');
+var DbConnection= require('./../Connection/conexion');
+const conexion = DbConnection();
+
+
 
 let TurnosModel = {}
 
@@ -124,3 +127,5 @@ TurnosModel.deleteTurno = (turno,callback)=>{
     }
 
 }
+
+module.exports=TurnosModel;

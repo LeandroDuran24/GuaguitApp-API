@@ -1,0 +1,131 @@
+CREATE DATABASE GuaguitApp;
+
+USE GuaguitApp;
+
+CREATE TABLE Usuarios(
+
+    idUsuario INT auto_increment PRIMARY KEY,
+    nombres VARCHAR(50),
+    apellidos VARCHAR(50),
+    email VARCHAR(60),
+    clave VARCHAR(25),
+    img TEXT
+);
+
+CREATE TABLE Chofer(
+
+    idChofer INT auto_increment PRIMARY KEY,
+    nombres VARCHAR(50),
+    apellidos VARCHAR(50),
+    celular VARCHAR(12),
+    telefono VARCHAR(12),
+    img TEXT
+
+);
+
+CREATE TABLE Sindicatos(
+
+    idSindicato INT auto_increment PRIMARY KEY,
+    nombre VARCHAR(75),
+    siglas VARCHAR(15),
+    email VARCHAR(60),
+    clave VARCHAR(25),
+    img TEXT
+
+);
+
+CREATE TABLE Vehiculos(
+    idVehiculo INT auto_increment PRIMARY KEY,
+    marca VARCHAR(25),
+    modelo VARCHAR(15),
+    matricula VARCHAR(15),
+    color VARCHAR(15),
+    capacidad INT,
+    ano INT,
+    img TEXT
+);
+
+CREATE TABLE SuperIntendecia(
+
+    idIntendencia INT auto_increment PRIMARY KEY,
+    pais VARCHAR(50)
+);
+
+CREATE TABLE Reservaciones(
+
+    idReservacion INT auto_increment PRIMARY KEY,
+    idUsuario INT,
+    idTurno INT,
+    estado VARCHAR(50)
+   
+    
+
+);
+
+CREATE TABLE Turnos(
+
+    idTurno INT auto_increment PRIMARY KEY,
+    idRuta INT,
+    idParada INT,
+    idChofer INT,
+    fechaHoraSalida DATETIME,
+    fechaHoraLlegada DATETIME
+
+);
+
+CREATE TABLE Paradas(
+
+    idParada INT auto_increment PRIMARY KEY,
+    idRuta INT,
+    idManager INT ,
+    nombre VARCHAR(30),
+    latitud VARCHAR(50),
+    longitud VARCHAR(50)
+
+);
+
+CREATE TABLE Inconvenientes(
+    idInconveniente INT auto_increment PRIMARY KEY,
+    idChofer INT,
+    idRuta INT,
+    titulo VARCHAR(50),
+    descripcion VARCHAR(200),
+    rescate VARCHAR(10),
+    latitud VARCHAR(50),
+    longitud VARCHAR(50)
+
+
+);
+
+CREATE TABLE Rutas(
+
+    idRuta INT auto_increment PRIMARY KEY,
+    idSindicato INT ,
+    idPresidente INT ,
+    nombre VARCHAR(75),
+    descripcion VARCHAR(100),
+    paradaA VARCHAR(50),
+    paradaB VARCHAR(50),
+    pasaje INT,
+    foto TEXT,
+    horaInicialLabores TIME,
+    horaFinLabores TIME,
+    aceptaReservaciones VARCHAR(10)
+
+
+
+);
+
+CREATE TABLE Cobros(
+    idCobro INT auto_increment PRIMARY KEY,
+    idRuta INT ,
+    idManager INT ,
+    idChofer INT ,
+    monto INT,
+    estado varchar(10),
+    fecha DATETIME
+);
+    
+    
+
+    

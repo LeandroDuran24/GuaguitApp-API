@@ -1,4 +1,7 @@
-const conexion= require('./../Connection/conexion');
+var DbConnection= require('./../Connection/conexion');
+const conexion = DbConnection();
+
+
 
 let UsuariosModel = {}
 
@@ -124,3 +127,5 @@ UsuariosModel.deleteUsuario = (usuario,callback)=>{
     }
 
 }
+
+module.exports=UsuariosModel;
