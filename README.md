@@ -1,2 +1,2 @@
 # GuaguitApp-API
-API de GuaguitApp monografico
+API en Node.JS y MySql
